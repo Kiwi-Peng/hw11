@@ -1,3 +1,6 @@
+### 使用者流程圖 (User Flow)
+
+```mermaid
 flowchart TD
     Start((Start<br>User Visits Home)) --> CheckSession{Security Check<br>Is Logged In?}
     
@@ -40,3 +43,4 @@ flowchart TD
     style ToggleForm fill:#bbf,stroke:#333,stroke-width:2px
     style Start fill:#dfd,stroke:#333,stroke-width:2px
     style End fill:#dfd,stroke:#333,stroke-width:2px
+```
