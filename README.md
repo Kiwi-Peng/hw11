@@ -7,7 +7,7 @@ flowchart TD
     %% A&A Authentication Flow
     CheckSession -- No --> LoginPage[Login Page<br>/login]
     LoginPage --> InputCreds[/Input Credentials/]
-    InputCreds --> VerifyCreds{Backend Verify<br>Valid Creds?}
+    InputCreds --> VerifyCreds{Verify<br>Valid Creds?}
     VerifyCreds -- No --> ShowError[Show Error Message<br>Generic Alert]
     ShowError --> InputCreds
     VerifyCreds -- Yes --> CreateSession[Create Session<br>Encrypted Storage]
