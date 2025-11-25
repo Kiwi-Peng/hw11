@@ -10,8 +10,9 @@ flowchart TD
     InputCreds --> VerifyCreds{Verify<br>Valid Creds?}
     VerifyCreds -- No --> ShowError[Show Error Message<br>Generic Alert]
     ShowError --> InputCreds
-    VerifyCreds -- Yes --> CreateSession[Create Session<br>Encrypted Storage]
-    CreateSession --> CheckSession
+    
+    %% 修改點：驗證成功後直接連回檢查點
+    VerifyCreds -- Yes --> CheckSession
     
     %% Feature Toggling & UI Rendering
     CheckSession -- Yes --> ReadConfig[Read config.json<br>Feature Settings]
