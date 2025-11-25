@@ -1,46 +1,42 @@
-### 使用者流程圖 (User Flow)
-
-```mermaid
 flowchart TD
-    Start((開始<br>使用者訪問首頁)) --> CheckSession{安全檢核<br>是否已登入?}
+    Start((Start<br>User Visits Home)) --> CheckSession{Security Check<br>Is Logged In?}
     
-    %% A&A 身分驗證流程
-    CheckSession -- No --> LoginPage[登入頁面<br>/login]
-    LoginPage --> InputCreds[/輸入帳號密碼/]
-    InputCreds --> VerifyCreds{後端驗證<br>帳密正確?}
-    VerifyCreds -- No --> ShowError[顯示錯誤訊息<br>通用錯誤提示]
+    %% A&A Authentication Flow
+    CheckSession -- No --> LoginPage[Login Page<br>/login]
+    LoginPage --> InputCreds[/Input Credentials/]
+    InputCreds --> VerifyCreds{Backend Verify<br>Valid Creds?}
+    VerifyCreds -- No --> ShowError[Show Error Message<br>Generic Alert]
     ShowError --> InputCreds
-    VerifyCreds -- Yes --> CreateSession[建立 Session<br>加密儲存]
+    VerifyCreds -- Yes --> CreateSession[Create Session<br>Encrypted Storage]
     CreateSession --> CheckSession
     
-    %% 功能切換與介面呈現
-    CheckSession -- Yes --> ReadConfig[讀取 config.json<br>功能開關設定]
-    ReadConfig --> ToggleTimer{檢查開關<br>countdown_timer?}
+    %% Feature Toggling & UI Rendering
+    CheckSession -- Yes --> ReadConfig[Read config.json<br>Feature Settings]
+    ReadConfig --> ToggleTimer{Check Toggle<br>countdown_timer?}
     
-    %% Feature A: 倒數計時器
-    ToggleTimer -- ON --> ShowTimer[顯示: 紅色倒數警示條]
-    ToggleTimer -- OFF --> NoTimer[顯示: 無倒數條]
+    %% Feature A: Countdown Timer
+    ToggleTimer -- ON --> ShowTimer[Show: Red Countdown Bar]
+    ToggleTimer -- OFF --> NoTimer[Show: No Timer]
     
-    ShowTimer --> ToggleForm{檢查開關<br>simple_form?}
+    ShowTimer --> ToggleForm{Check Toggle<br>simple_form?}
     NoTimer --> ToggleForm
     
-    %% Feature B: 簡化表單
-    ToggleForm -- ON (簡化版) --> SimpleUI[顯示: 簡化版表單<br>僅 Email 欄位]
-    ToggleForm -- OFF (完整版) --> ComplexUI[顯示: 完整版表單<br>姓名/電話/Email/職稱]
+    %% Feature B: Simple Form
+    ToggleForm -- ON (Simple) --> SimpleUI[Show: Simple Form<br>Email Only]
+    ToggleForm -- OFF (Full) --> ComplexUI[Show: Full Form<br>Name/Phone/Email/Title]
     
-    %% 互動與結束
-    SimpleUI --> UserAction[/使用者填寫並送出/]
+    %% Interaction & End
+    SimpleUI --> UserAction[/User Fills & Submits/]
     ComplexUI --> UserAction
     
-    UserAction --> LogMetric[後端記錄數據<br>Metric Logging]
-    LogMetric --> SuccessPage[成功頁面<br>/success]
-    SuccessPage --> End((結束))
+    UserAction --> LogMetric[Backend Logs Data<br>Metric Logging]
+    LogMetric --> SuccessPage[Success Page<br>/success]
+    SuccessPage --> End((End))
 
-    %% 樣式設定
+    %% Styling
     style CheckSession fill:#f9f,stroke:#333,stroke-width:2px
     style VerifyCreds fill:#f9f,stroke:#333,stroke-width:2px
     style ToggleTimer fill:#bbf,stroke:#333,stroke-width:2px
     style ToggleForm fill:#bbf,stroke:#333,stroke-width:2px
     style Start fill:#dfd,stroke:#333,stroke-width:2px
     style End fill:#dfd,stroke:#333,stroke-width:2px
-```
