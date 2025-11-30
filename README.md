@@ -1,5 +1,5 @@
+```mermaid
 graph TD
-%% 定義節點
     Start[🚨 警報響起] --> Check{網站還活著嗎?}
     
     %% 分支 1: 服務死掉
@@ -22,31 +22,10 @@ graph TD
     
     Verify --> End((結案/寫報告))
 
-    %% 樣式設計 (設計師定義)
+    %% 樣式設計
     style Start fill:#ffcccc,stroke:#cc0000,stroke-width:2px
     style Restart fill:#e6f3ff,stroke:#0066cc,stroke-width:2px,stroke-dasharray: 5 5
     style StopChaos fill:#e6f3ff,stroke:#0066cc,stroke-width:2px,stroke-dasharray: 5 5
     style CheckDB fill:#e6f3ff,stroke:#0066cc,stroke-width:2px,stroke-dasharray: 5 5
     style Verify fill:#ccffcc,stroke:#009900,stroke-width:4px
-
-# [請開發人員填寫檢查指令]
-curl -I http://[你的網址]/
-
-# [請開發人員填寫 Log 查詢指令]
-# 例如：Render/Docker logs
-docker logs [container_name] --tail 50 | grep "ERROR"
-
-# [請開發人員填寫重啟指令]
-docker restart [app_name]
-# 或在 Render 後台點擊 "Manual Deploy" -> "Clear Cache & Deploy"
-
-# [請開發人員填寫關閉指令]
-# 1. 設定環境變數
-export CHAOS_MODE=False
-# 2. 重新啟動應用
-python app.py
-
-# [請開發人員填寫 DB 檢查指令]
-# 檢查連線字串或重啟 DB 實例
-
-
+```
