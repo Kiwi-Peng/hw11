@@ -32,20 +32,5 @@ graph TD
     style CheckConfig fill:#e6f3ff,stroke:#0066cc,stroke-width:2px,stroke-dasharray: 5 5
     style Verify fill:#ccffcc,stroke:#009900,stroke-width:4px
 
-    ### 🟢 劇本 A：服務卡死/回應過慢 (Generic Fix)
-**適用情況：** 網站顯示 502 Bad Gateway，或回應時間超過 5 秒。
-
-**執行步驟 (Render Dashboard)：**
-1. 登入 [Render Dashboard](https://dashboard.render.com/)。
-2. 進入服務頁面，點擊右上角 **"Manual Deploy"**。
-3. 選擇 **"Deploy latest commit"**。
-4. 等待 Log 出現 `Your service is live` 即完成重啟。
-
-### 🔵 劇本 B：平台配置錯誤 (Config Error)
-**適用情況：** 服務顯示 `Build Failed` 或功能開關異常（如混沌模式無法關閉）。
-
-**檢查清單：**
-1. **環境變數：** 進入 **Environment** 分頁，確認 `CHAOS_MODE` = `False`。
-2. **啟動指令：** 進入 **Settings** 分頁，確認 Start Command 為 `gunicorn app:app`。
-3. **修正方式：** 修改數值後點擊 **Save Changes**，系統將自動重新部署。
+   
 ```
