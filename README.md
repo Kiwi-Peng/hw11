@@ -1,36 +1,26 @@
 ```mermaid
 graph TD
-    Start[🚨 警報響起] --> Check{網站還活著嗎?}
-
-    %% 分支 1: 服務死掉 (502/404)
-    %% 修改：不再檢查 Docker 容器，改為檢查服務狀態 (例如 Render)
-    Check -- NO (502/404) --> CheckStatus[檢查服務/平台狀態]
-    CheckStatus --> IsRunning{服務在跑嗎?}
-    IsRunning -- NO --> Restart[🛠️ 執行方案 A: 重啟服務]
-    IsRunning -- YES --> CheckConfig[🛠️ 執行方案 B: 檢查平台設定]
-
-    %% 分支 2: 服務活著但報錯
-    %% 修改：移除 DB Error，保留 Chaos Monkey 和一般錯誤
-    Check -- YES (能開但報錯) --> CheckLogs[🔍 檢查錯誤日誌]
-    CheckLogs --> ErrorType{錯誤類型?}
-    ErrorType -- "Chaos Monkey" --> StopChaos[🛠️ 執行方案 C: 關閉混沌模式]
-    ErrorType -- "其他錯誤" --> CheckCode[🛠️ 執行方案 D: 檢查程式碼/重啟]
-
-    %% 匯聚與驗證
-    Restart --> Verify[✅ 驗證修復]
-    CheckConfig --> Verify
-    StopChaos --> Verify
-    CheckCode --> Verify
-
-    Verify --> End((結案/寫報告))
-
-    %% 樣式設計 (保持一致)
+    Start[🚨 發現異常] --> CheckUI{儀表板顯示什麼?}
+    
+    %% 分支 1: 服務死掉
+    CheckUI -- "System Status: ERROR" --> CheckRender[檢查 Render 平台]
+    CheckRender --> Restart[🛠️ 執行劇本 A: 手動重啟]
+    
+    %% 分支 2: CPU 飆高
+    CheckUI -- "CPU > 90%" --> CheckChaos{是否正在測試?}
+    CheckChaos -- YES (有人按了 Stress CPU) --> Wait[⏳ 等待 5 秒自動結束]
+    CheckChaos -- NO (異常飆高) --> Restart
+    
+    %% 分支 3: 混沌模式忘記關
+    CheckUI -- "Chaos Controls: ON" --> Restore[🛠️ 點擊綠色按鈕: RESTORE SYSTEM]
+    
+    %% 匯聚
+    Restart --> Verify[✅ 觀察 System Status 變回綠色]
+    Wait --> Verify
+    Restore --> Verify
+    
     style Start fill:#ffcccc,stroke:#cc0000,stroke-width:2px
-    style Restart fill:#e6f3ff,stroke:#0066cc,stroke-width:2px,stroke-dasharray: 5 5
-    style StopChaos fill:#e6f3ff,stroke:#0066cc,stroke-width:2px,stroke-dasharray: 5 5
-    style CheckCode fill:#e6f3ff,stroke:#0066cc,stroke-width:2px,stroke-dasharray: 5 5
-    style CheckConfig fill:#e6f3ff,stroke:#0066cc,stroke-width:2px,stroke-dasharray: 5 5
-    style Verify fill:#ccffcc,stroke:#009900,stroke-width:4px
-
+    style Restart fill:#e6f3ff,stroke:#0066cc,stroke-width:2px
+    style Restore fill:#ccffcc,stroke:#009900,stroke-width:2px
    
 ```
